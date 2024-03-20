@@ -3,7 +3,6 @@
 // Free To Use To Find Comfort And Peace
 //==================================================
 
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using ProjectSimple.Api.Models.Foundations.Products;
 
@@ -23,7 +22,6 @@ namespace ProjectSimple.Api.Brokers.Storages
             return await InsertAsync(product);
         }
 
-      
         public IQueryable<Product> SelectAllProducts()
         {
             return SelectAll<Product>();
