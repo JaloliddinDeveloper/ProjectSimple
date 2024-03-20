@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ProjectSimple.Api.Brokers.Storages
 {
-    public partial class StorageBroker:EFxceptionsContext,IStorageBroker
+    public partial class StorageBroker:EFxceptionsContext
     {
         private readonly IConfiguration configuration;
 
@@ -58,7 +58,7 @@ namespace ProjectSimple.Api.Brokers.Storages
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-D1BB1FN;Initial Catalog=TestDB;Integrated Security=True;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-D1BB1FN;Initial Catalog=SimpleProjectDb;Integrated Security=True;TrustServerCertificate=True");
         }
        
         public override void Dispose() { }
