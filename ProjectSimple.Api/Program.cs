@@ -1,3 +1,8 @@
+//==================================================
+// Copyright (c) Coalition Of Good-Hearted Engineers
+// Free To Use To Find Comfort And Peace
+//==================================================
+
 using ProjectSimple.Api.Brokers.Loggings;
 using ProjectSimple.Api.Brokers.Storages;
 var builder = WebApplication.CreateBuilder(args);
