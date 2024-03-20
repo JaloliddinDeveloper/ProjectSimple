@@ -13,8 +13,6 @@ namespace ProjectSimple.Api.Brokers.Loggings
         {
             this.logger = logger;
         }
-
-
         public void LogError(Exception exception)
         {
             logger.LogError(exception,exception.Message);
