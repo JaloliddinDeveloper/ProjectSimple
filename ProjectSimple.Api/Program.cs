@@ -30,5 +30,11 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-builder.Services.AddTransient<IStorageBroker, StorageBroker>();
-builder.Services.AddTransient<ILoggingBroker, LoggingBroker>();
+
+AddBrokers(builder);
+
+static void AddBrokers(WebApplicationBuilder builder)
+{
+    builder.Services.AddTransient<IStorageBroker, StorageBroker>();
+    builder.Services.AddTransient<ILoggingBroker, LoggingBroker>();
+}
