@@ -6,6 +6,7 @@
 using ProjectSimple.Api.Brokers.Loggings;
 using ProjectSimple.Api.Brokers.Storages;
 using ProjectSimple.Api.Models.Foundations.Products;
+using ProjectSimple.Api.Models.Foundations.Products.Exceptions;
 
 namespace ProjectSimple.Api.Services.Foundations.Products
 {
@@ -13,15 +14,33 @@ namespace ProjectSimple.Api.Services.Foundations.Products
     {
         private readonly IStorageBroker storageBroker;
         private readonly ILoggingBroker loggingBroker;
-        public ProductService(IStorageBroker storageBroker,ILoggingBroker loggingBroker)
+
+        public ProductService(IStorageBroker storageBroker, ILoggingBroker loggingBroker)
         {
             this.storageBroker = storageBroker;
             this.loggingBroker = loggingBroker;
         }
-       
+
         public ValueTask<Product> AddProductAsync(Product product)
         {
-            return this.storageBroker.InsertProductAsync(product);
+            try
+            {
+                if (product is null)
+                {
+                    throw new NullProductException();
+                }
+                return this.storageBroker.InsertProductAsync(product);
+            }
+            catch (NullProductException nullProductException)
+            {
+                var productValidationException =
+                    new ProductValidationException(nullProductException);
+
+                this.loggingBroker.LogError(productValidationException);
+
+                throw productValidationException;
+            }
+           
         }
 
         public IQueryable<Product> RetrieveAllProducts()
