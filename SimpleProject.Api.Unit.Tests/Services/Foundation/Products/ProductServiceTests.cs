@@ -8,7 +8,9 @@ using ProjectSimple.Api.Brokers.Loggings;
 using ProjectSimple.Api.Brokers.Storages;
 using ProjectSimple.Api.Models.Foundations.Products;
 using ProjectSimple.Api.Services.Foundations.Products;
+using System.Linq.Expressions;
 using Tynamix.ObjectFiller;
+using Xeptions;
 
 namespace SimpleProject.Api.Unit.Tests.Services.Foundation.Products
 {
@@ -26,12 +28,16 @@ namespace SimpleProject.Api.Unit.Tests.Services.Foundation.Products
             this.productService = new ProductService
                 (storageBroker:this.storageBrokerMock.Object,
                 loggingBroker: this.loggingBrokerMock.Object);
-
         }
         private static Product CreateRandomProduct() =>
            CreateProductFiller(data: GetRandomDateTimeOffset()).Create();
         public static DateTimeOffset GetRandomDateTimeOffset() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
+
+        private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException)
+        {
+           return actualException=>actualException.SameExceptionAs(expectedException);
+        }
 
         private static Filler<Product> CreateProductFiller(DateTimeOffset data)
         {
@@ -40,6 +46,5 @@ namespace SimpleProject.Api.Unit.Tests.Services.Foundation.Products
                .OnType<DateTimeOffset>().Use(data);
             return filler;
         }
-
     }
 }
